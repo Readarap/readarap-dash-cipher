@@ -1,265 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Readarap Street Cipher</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1a0033, #330066);
-            color: #00ffcc;
-            font-family: 'Press Start 2P', system-ui;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            padding: 40px 0;
-            border-bottom: 4px solid #00ffcc;
-        }
-        h1 {
-            font-size: 2.8rem;
-            margin: 0;
-            text-shadow: 0 0 20px #00ffcc;
-            letter-spacing: 4px;
-        }
-        .subtitle {
-            font-size: 1.1rem;
-            color: #ff00aa;
-            margin-top: 10px;
-        }
-        .level-bar {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-        }
-        .level-btn {
-            padding: 12px 28px;
-            border: 3px solid #00ffcc;
-            background: transparent;
-            color: #00ffcc;
-            font-family: 'Press Start 2P', system-ui;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .level-btn.active, .level-btn:hover {
-            background: #00ffcc;
-            color: #1a0033;
-        }
-        .game-area {
-            background: rgba(0, 0, 0, 0.4);
-            border: 4px solid #ff00aa;
-            padding: 30px;
-            margin: 20px 0;
-        }
-        .question {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        .options {
-            display: grid;
-            gap: 12px;
-        }
-        .option {
-            padding: 16px;
-            border: 3px solid #00ffcc;
-            background: rgba(0, 255, 204, 0.1);
-            color: white;
-            font-family: 'Press Start 2P', system-ui;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: left;
-        }
-        .option:hover {
-            background: #00ffcc;
-            color: #1a0033;
-        }
-        .option.correct {
-            background: #00ff00;
-            color: #000;
-            border-color: #00ff00;
-        }
-        .option.wrong {
-            background: #ff3366;
-            color: white;
-            border-color: #ff3366;
-        }
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px 0;
-            font-size: 0.9rem;
-        }
-        .stat {
-            background: rgba(255, 0, 170, 0.2);
-            padding: 10px 20px;
-            border: 2px solid #ff00aa;
-        }
-        button {
-            background: #ff00aa;
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            font-family: 'Press Start 2P', system-ui;
-            font-size: 1rem;
-            cursor: pointer;
-            margin: 10px 5px;
-        }
-        button:hover {
-            background: #ff3399;
-        }
-        .hidden { display: none; }
-        .feedback {
-            text-align: center;
-            font-size: 1.4rem;
-            margin: 20px 0;
-            min-height: 60px;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Readarap Cipher Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#07070c;--ink:#f6f1e8;--muted:#9a9388;--gold:#f0c14b;--cyan:#3ee0c6;--mag:#ff3d8a;--line:#22222d;
+  --skin:#3ee0c6;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}
+body{min-height:100vh;background:
+  radial-gradient(900px 420px at 10% -10%,rgba(62,224,198,.16),transparent 55%),
+  radial-gradient(800px 480px at 110% 0%,rgba(255,61,138,.14),transparent 50%),
+  linear-gradient(180deg,#0b0b12 0%,#07070c 40%)}
+.wrap{max-width:1120px;margin:0 auto;padding:20px 18px 80px}
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:8px 0 18px;border-bottom:1px solid var(--line)}
+.brand{display:flex;gap:12px;align-items:center}
+.mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--gold),#ff8a3d);color:#111}
+.brand h1{margin:0;font-family:"Bebas Neue",sans-serif;font-size:34px;letter-spacing:1px;line-height:1}
+.brand p{margin:0;color:var(--muted);font-size:12px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,button,.chip{font:inherit}
+select{background:#12121a;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 12px}
+.chip{border:1px solid var(--line);background:#12121a;color:var(--ink);border-radius:999px;padding:8px 12px;cursor:pointer}
+.chip.on{border-color:var(--skin);box-shadow:0 0 0 1px var(--skin) inset;color:#fff}
+.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:18px;margin:22px 0}
+@media(max-width:860px){.hero{grid-template-columns:1fr}}
+.card{background:rgba(18,18,26,.86);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(10px)}
+.kicker{color:var(--gold);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:800}
+h2{font-family:"Bebas Neue",sans-serif;font-size:42px;margin:6px 0 8px;letter-spacing:.5px}
+.lede{color:#d7d0c6;line-height:1.55;margin:0 0 16px}
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:700px){.rooms{grid-template-columns:1fr}}
+.room{border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;background:#0e0e16;text-align:left;color:inherit}
+.room.on{border-color:var(--skin);background:#141422}
+.room b{display:block;font-size:15px;margin-bottom:4px}
+.room span{color:var(--muted);font-size:12px}
+.banner{margin-top:14px;padding:10px 12px;border-radius:12px;background:#101018;border:1px dashed #2a2a36;color:#cfc8be;font-size:13px}
+.stage{margin-top:8px}
+label.lbl{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+input[type=text],textarea{width:100%;background:#0b0b12;border:1px solid #2a2a36;color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{border:0;border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer;background:var(--gold);color:#111}
+.btn.ghost{background:#1a1a24;color:var(--ink);border:1px solid #2a2a36}
+.btn.danger{background:var(--mag);color:#fff}
+.syls{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;min-height:56px}
+.syl{min-width:72px;padding:14px 12px;border-radius:16px;text-align:center;background:#161622;border:1px solid #2d2d3a;font-weight:800;font-size:20px;transition:transform .12s,box-shadow .12s,background .12s}
+.syl.hit{background:var(--cyan);color:#06120f;transform:translateY(-4px);box-shadow:0 10px 30px rgba(62,224,198,.25)}
+.syl.miss{background:#3a1422}
+.meter{height:10px;background:#1b1b24;border-radius:99px;overflow:hidden;margin:10px 0 6px}
+.meter>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--gold));}
+.beat{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}
+.dot{width:12px;height:12px;border-radius:50%;background:#2a2a36}
+.dot.on{background:var(--gold);box-shadow:0 0 16px var(--gold)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+@media(max-width:700px){.grid4{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#101018;border:1px solid #262632;border-radius:14px;padding:12px}
+.stat b{display:block;font-size:22px}
+.stat span{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.letters{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px}
+.letter{aspect-ratio:1;border-radius:16px;border:1px solid #2a2a36;background:#12121a;color:var(--ink);font-weight:800;font-size:22px;cursor:pointer}
+.letter.flip{background:#1b2430;color:var(--cyan)}
+.letter.gone{opacity:.28;pointer-events:none}
+.lyrics{font-size:22px;line-height:1.55;min-height:140px}
+.lyrics .ln{opacity:.38;transition:opacity .2s,color .2s}
+.lyrics .ln.now{opacity:1;color:var(--gold)}
+.lyrics .swap{color:var(--cyan)}
+.tiny{font-size:12px;color:var(--muted)}
+.pass{color:#86f0c8}.fail{color:#ff8aa8}
+footer{margin-top:28px;color:#6f6a63;font-size:12px;line-height:1.5}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>READARAP</h1>
-            <div class="subtitle">STREET CIPHER</div>
-            <p style="margin-top:20px; color:#ff00aa; font-size:0.85rem;">Learn by your favorite song • Syllable Sync & Cadence Key</p>
-        </header>
-
-        <div class="level-bar">
-            <button class="level-btn active" onclick="setLevel(50)">50% BEGINNER</button>
-            <button class="level-btn" onclick="setLevel(75)">75% PROSPECT</button>
-            <button class="level-btn" onclick="setLevel(100)">100% EXPERT</button>
-        </div>
-
-        <div class="stats">
-            <div class="stat">ACCURACY: <span id="accuracy">100</span>%</div>
-            <div class="stat">SYLLABLES/MIN: <span id="spm">42</span></div>
-            <div class="stat">STREAK: <span id="streak">7</span></div>
-        </div>
-
-        <div class="game-area" id="game-area">
-            <div class="question" id="question"></div>
-            <div class="options" id="options"></div>
-            <div class="feedback" id="feedback"></div>
-        </div>
-
-        <div style="text-align:center;">
-            <button onclick="nextQuestion()">NEXT LINE →</button>
-            <button onclick="resetGame()">RESET</button>
-        </div>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="mark">RA</div>
+      <div>
+        <h1>READARAP CIPHER STUDIO</h1>
+        <p id="tagline">Make it make sense — one lyric, rhythm, and rhyme at a time.</p>
+      </div>
     </div>
+    <div class="controls">
+      <select id="skin" aria-label="Skin">
+        <option value="street">Street Cypher</option>
+        <option value="academy">Private Academy</option>
+        <option value="k12">K12 Classroom</option>
+      </select>
+      <select id="lang" aria-label="Language">
+        <option value="en">EN</option>
+        <option value="es">ES chrome</option>
+      </select>
+      <button class="chip" id="coachBtn" type="button">Coach on</button>
+    </div>
+  </header>
 
-    <script>
-        let currentLevel = 50;
-        let correct = 0;
-        let total = 0;
-        let currentStreak = 0;
+  <section class="hero">
+    <div class="card">
+      <div class="kicker" id="kicker">Shared engine · three skins</div>
+      <h2 id="headline">Name Flo is the free door.</h2>
+      <p class="lede" id="lede">StarMaker sells the catalog. Voloco sells the polish. This room scores whether the syllable locked, the cadence held, the rhyme family matched, and the fact stayed true. If it cannot be clapped, it does not ship first.</p>
+      <div class="rooms">
+        <button class="room on" data-room="flo" type="button"><b>1. Name Flo</b><span>Free. Break the name. Clap the chunks.</span></button>
+        <button class="room" data-room="buss" type="button"><b>2. Alphabet Buss Down</b><span>Letter name + baby sound on the beat.</span></button>
+        <button class="room" data-room="kara" type="button"><b>3. Freestyle Karaoke</b><span>50 / 75 / 100 swap. Original bed only.</span></button>
+      </div>
+      <div class="banner" id="rules"></div>
+    </div>
+    <div class="card">
+      <div class="kicker">Studio meter</div>
+      <div class="grid4">
+        <div class="stat"><b id="bpmVal">80</b><span>BPM</span></div>
+        <div class="stat"><b id="barVal">1 / 8</b><span>Bar</span></div>
+        <div class="stat"><b id="coinVal">0</b><span>RapCoins</span></div>
+        <div class="stat"><b id="tierVal">Door</b><span>Tier</span></div>
+      </div>
+      <div class="beat" style="margin-top:14px">
+        <i class="dot" id="d1"></i><i class="dot" id="d2"></i><i class="dot" id="d3"></i><i class="dot" id="d4"></i>
+        <span id="beatLabel">stopped</span>
+      </div>
+      <div class="meter" aria-label="Mic level"><i id="micBar"></i></div>
+      <div class="tiny" id="micNote">Mic stays on-device. No child take uploads.</div>
+      <div class="row">
+        <button class="btn ghost" id="micBtn" type="button">Arm mic</button>
+        <button class="btn ghost" id="recBtn" type="button">Record take</button>
+      </div>
+    </div>
+  </section>
 
-        const questions = {
-            50: [
-                { q: "I had to _____ you books today", a: ["show", "kiss", "tell", "meet"], correct: 0 },
-                { q: "There's just so many _____ to say", a: ["words", "things", "songs", "days"], correct: 0 },
-                { q: "We've been _____ here so long", a: ["learning", "meeting", "waiting", "singing"], correct: 0 },
-                { q: "Let's just _____ and say goodbye", a: ["read", "kiss", "dance", "play"], correct: 0 }
-            ],
-            75: [
-                { q: "We need to start our _____ phase", a: ["reading", "singing", "dancing", "playing"], correct: 0 },
-                { q: "Embrace the _____, let it renew", a: ["text", "beat", "song", "light"], correct: 0 },
-                { q: "Our phonetic _____ feels strong", a: ["path", "road", "way", "line"], correct: 0 },
-                { q: "Future _____ waits there for you", a: ["success", "failure", "money", "fame"], correct: 0 }
-            ],
-            100: [
-                { q: "Readarap makes _____ fun", a: ["learning", "singing", "dancing", "eating"], correct: 0 },
-                { q: "We're matching _____ with every word", a: ["beats", "words", "notes", "lines"], correct: 0 },
-                { q: "We build _____ now you see", a: ["fluency", "music", "poetry", "art"], correct: 0 },
-                { q: "With Readarap we reach the _____!", a: ["sky", "ground", "sea", "moon"], correct: 0 }
-            ]
-        };
+  <section class="card stage" id="floStage">
+    <div class="kicker">Coach: Miss Little</div>
+    <h2>Name Flo</h2>
+    <label class="lbl" for="nameIn">Type a name. We chop syllables and lock them to 80 BPM.</label>
+    <input id="nameIn" type="text" placeholder="Example: Victoria" maxlength="40" />
+    <div class="row">
+      <button class="btn" id="lockBtn" type="button">Lock to beat</button>
+      <button class="btn ghost" id="clapBtn" type="button">Clap syllable</button>
+      <button class="btn ghost" id="speakBtn" type="button">Hear chunks</button>
+    </div>
+    <div class="syls" id="sylBox"></div>
+    <p class="tiny" id="footLabel">Stress foot appears after lock.</p>
+    <div class="grid4">
+      <div class="stat"><b id="sylScore">—</b><span>Syllable</span></div>
+      <div class="stat"><b id="cadScore">—</b><span>Cadence</span></div>
+      <div class="stat"><b id="rhyScore">—</b><span>Rhyme</span></div>
+      <div class="stat"><b id="factScore">—</b><span>Fact</span></div>
+    </div>
+    <p id="passLine" class="tiny" style="margin-top:12px"></p>
+  </section>
 
-        function setLevel(level) {
-            currentLevel = level;
-            document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            resetGame();
-        }
+  <section class="card stage" id="bussStage" hidden>
+    <div class="kicker">Coach: Dr. Baby</div>
+    <h2>Alphabet Buss Down</h2>
+    <p class="lede">Match uppercase to lowercase. Call the baby sound. Eight cards for v1 — the 52-card set stays in HQ JSON.</p>
+    <div class="row">
+      <button class="btn" id="dealBtn" type="button">Deal match</button>
+      <button class="btn ghost" id="soundBtn" type="button">Say letter sound</button>
+    </div>
+    <p class="tiny" id="letterHelp">Pick a letter, then tap Say.</p>
+    <div class="letters" id="letterGrid" style="margin-top:14px"></div>
+  </section>
 
-        function loadQuestion() {
-            const qList = questions[currentLevel];
-            const q = qList[Math.floor(Math.random() * qList.length)];
-            
-            document.getElementById('question').innerHTML = q.q;
-            const opts = document.getElementById('options');
-            opts.innerHTML = '';
-            
-            q.a.forEach((ans, i) => {
-                const btn = document.createElement('div');
-                btn.className = 'option';
-                btn.innerHTML = ans;
-                btn.onclick = () => checkAnswer(i, q.correct, btn);
-                opts.appendChild(btn);
-            });
-            
-            document.getElementById('feedback').innerHTML = '';
-        }
+  <section class="card stage" id="karaStage" hidden>
+    <div class="kicker">Original bed · map and swap · never the master</div>
+    <h2>Freestyle Karaoke</h2>
+    <p class="lede" id="mapLine">Map: 4/4 · 88 BPM · 8 bars · syllable 8-8-9-8 · rhyme family -ay / -ay / -own / -own · subject: fractions.</p>
+    <div class="row">
+      <button class="chip on" data-tier="50" type="button">Baby 50%</button>
+      <button class="chip" data-tier="75" type="button">Little 75%</button>
+      <button class="chip" data-tier="100" type="button">Big 100%</button>
+    </div>
+    <div class="lyrics" id="lyricBox"></div>
+    <div class="row">
+      <button class="btn" id="playKara" type="button">Play bed</button>
+      <button class="btn ghost" id="stopKara" type="button">Stop</button>
+      <button class="btn ghost" id="scoreKara" type="button">Score this pass</button>
+    </div>
+    <label class="lbl" for="factIn" style="margin-top:16px">Fact check — finish the true line</label>
+    <input id="factIn" type="text" placeholder="One of two is half the ____" />
+  </section>
 
-        function checkAnswer(selected, correctIndex, btn) {
-            total++;
-            const allOptions = document.querySelectorAll('.option');
-            allOptions.forEach(opt => opt.onclick = null);
-            
-            if (selected === correctIndex) {
-                correct++;
-                currentStreak++;
-                btn.classList.add('correct');
-                document.getElementById('feedback').innerHTML = '🔥 PERFECT SYNC! 🔥';
-                document.getElementById('feedback').style.color = '#00ff00';
-            } else {
-                currentStreak = 0;
-                btn.classList.add('wrong');
-                allOptions[correctIndex].classList.add('correct');
-                document.getElementById('feedback').innerHTML = 'TRY AGAIN — FEEL THE BEAT';
-                document.getElementById('feedback').style.color = '#ff3366';
-            }
-            
-            updateStats();
-        }
-
-        function updateStats() {
-            const acc = total > 0 ? Math.round((correct / total) * 100) : 100;
-            document.getElementById('accuracy').innerHTML = acc;
-            document.getElementById('streak').innerHTML = currentStreak;
-            document.getElementById('spm').innerHTML = 38 + Math.floor(Math.random() * 12);
-        }
-
-        function nextQuestion() {
-            loadQuestion();
-        }
-
-        function resetGame() {
-            correct = 0;
-            total = 0;
-            currentStreak = 0;
-            updateStats();
-            loadQuestion();
-        }
-
-        window.onload = () => {
-            loadQuestion();
-            updateStats();
-        };
-    </script>
+  <footer>
+    Readarap Academy LLC. Protocol from HQ. This is a studio prototype: Web Audio oscillator beds, SpeechSynthesis coach, local mic meter. Not StarMaker. Not Voloco. Not an NSF or SAM award. Name Flo stays free.
+  </footer>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
